@@ -67,6 +67,9 @@ int main(int argc, char *argv[])
     informação acerca do prórpio link e não do ficheiro, esta chamada resulta num tamanho diferente para temp2.txt. A chamada
     stat(), para symbolic links, retorna informações do ficheiro, daí este ter o mesmo tamanho que o ficheiro original (6);
     
+6e) Ao apagar o ficheiro original temp.txt, o temp2.txt deixa de funcionar, porque o pointer aponta para um ficheiro que foi apagado,
+    temp1.txt ainda funciona, porque é uma cópia do conteúdo do ficheiro original.
+    Apagando de seguida temp2.txt, temp1.txt continua a mostrar o conteúdo do ficheiro original corretamente.
 
 */
 
