@@ -9,15 +9,20 @@
 
 
 int num = 50000;
+pthread_mutex_t mut=PTHREAD_MUTEX_INITIALIZER; 
 
 void * thrfunc(void * arg) {   
     int i;   
     int* count = (int*) malloc(sizeof(int));
     fprintf(stderr, "Starting thread %s\n", (char *) arg);   
-    while (num > 1){
-        write(STDERR,arg,1);
-        num = num-strlen(arg);
+    
+    while (num > 0){
+        pthread_mutex_lock(&mut);   
         *count += strlen(arg);  
+        num--; 
+        pthread_mutex_unlock(&mut);
+        write(STDERR,arg,1);
+           
     }
 
     pthread_exit(count);
@@ -40,9 +45,3 @@ int main() {
     return 0; 
 }
 
-
-/*
-2. Ao imprimir os caracteres os threads nao estao sincronizados, desta maneira, o valor de count
-pode ser decrementado mais vezes que o pretendido, imprimindo mais caracteres que o suposto.
-
-*/
